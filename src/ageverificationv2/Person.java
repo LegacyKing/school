@@ -13,10 +13,11 @@ import static ageverificationv2.AgeVerificationv2.getUserInput;
  */
 public class Person implements Input {
     String userName;
-    int userAge = 0;
-    String userAddress = null;
-    String userPhoneNumber = null;
-  
+    int userAge;
+    String userAddress;
+    String userPhoneNumber;
+
+    
     @Override
     public String getUserName(){
        userName = getUserInput("Enter your name: ");  
@@ -28,7 +29,7 @@ public class Person implements Input {
         String enteredAge = getUserInput("Enter Age in Years: ");
         userAge = Integer.parseInt(enteredAge);     // Convert the Age String to a usable number
         if (userAge <=0 || userAge >= 116){         // validate proper age
-            return 0;
+            return 1;
         } else {
             return userAge;
         }

@@ -1,14 +1,10 @@
 
 package ageverificationv2;
 
-import java.io.BufferedReader;
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.io.InputStreamReader;
-
-
+import java.io.*;
+import java.util.*;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * Program: AgeVerification 
@@ -20,68 +16,69 @@ import java.io.InputStreamReader;
 public class AgeVerificationv2 {
 
     public static final int RequiredAge = 21;   // Constant to allow ease of changing this in the future
-    
-    // file f = new File("age_verification_data.txt");
-    
-
-    
+          
     /**
      * @param args the command line arguments
      */
         
     
     public static void main(String[] args){
-        // Declarations
-        boolean ageVerified = false;    // set the value to false initially, this is for the While loop.
-        String finished = null;
-        // Set the userAge to 0
-        int userAge = 0;
-        
     
-        while (!"Y".equals(finished)){
-        // run loop
-            userAge = userDetails();
-            finished = getUserInput("Are all users entered? (y/n): "); 
+        BufferedWriter bw = null;
+        try {
+            bw = new BufferedWriter(new FileWriter("J:\\test.txt"));
+        } catch (IOException ex) {
+            Logger.getLogger(AgeVerificationv2.class.getName()).log(Level.SEVERE, null, ex);
         }
-    while (ageVerified == false){  // Until the age meets the minimum requirement, continue to loop.
-            if (userAge < RequiredAge){       
-                    // calls the userDetails method and updates the userAge int value as well.
-            } else {
-                ageVerified = true;
-                System.out.println("Enjoy your program");
-                // load program
-            }   // close if/else loop
-      }  
-    } // close method
+          
+        
+        // Declarations
+        String finished = null;
+       List<Person> allPeople = new ArrayList<>();
+       
+      
+       while (!"y".equals(finished)){
+        // run loop
+         Person myPerson = new Person(); // create a new person object, in theory a new object is created each loop
+        
+        int userAge = myPerson.getAge();
+        String userName = myPerson.getUserName();
+        String userAddress = myPerson.getAddress();
+        String userPhoneNumber = myPerson.getPhoneNumber();
+        
+        if (userAge < RequiredAge){                                       // loop,
+           // we do nothing if not the required age or older.
+        }
+        else {
+           
+            allPeople.add(myPerson);    // Add myPerson to the arraylist, not reading back, just storing.
+              // write the info to the file
+            try {
+                bw.write("Name is: " + userName + ", Age is: " + userAge + ", Address is: " + userAddress + ", Phone Number: " + userPhoneNumber);
+                bw.write("\n");
+                
+             } catch (IOException ex) {
+                 Logger.getLogger(AgeVerificationv2.class.getName()).log(Level.SEVERE, null, ex);
+             }
+        }
+        finished = getUserInput("Are you finished? (y/n): "); 
+        } // endwhile, we read and output from the file.
+        try { 
+            bw.close(); // Close the file as we no longer need it.
+        } catch (IOException ex) {
+            Logger.getLogger(AgeVerificationv2.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+       readfile rf = new readfile();    // create an object to read our file.
+        
+        rf.openFile();  // Open the file
+        rf.readFile();  // Read the contents of the file
+        rf.closeFile(); // Close the file after we are done.
+        
+        
+   } // close method
 
-    private static int userDetails(){             // method
-        // Setting up arrays
-        int personCount = 0;
-        Person[] myPerson;
-        personCount ++;
-        myPerson = new Person[personCount];
-        // Person myPerson = new Person(); // create a new person object, in theory a new object is created each loop
-        
-        int userAge = myPerson[personCount].getAge();
-        String userName = myPerson[personCount].getUserName();
-        String userAddress = myPerson[personCount].getAddress();
-        String userPhoneNumber = myPerson[personCount].getPhoneNumber();
-        
-// each myPerson will obtain data
-        //int userAge = myPerson.getAge();                    // Assign the int value from the object myPerson
-        //String userName = myPerson.getUserName();           // assign value for userName
-        //String userAddress = myPerson.getAddress();         // assign value for userAddress
-        //String userPhoneNumber = myPerson.getPhoneNumber(); // assign value for userPhoneNumber
-    
-        // Input userAddress = Person.getAddress();
-        // Input userPhoneNumber = Person.getPhoneNumber();
-        
-        
-        userVerification(userAge, userName, userAddress, userPhoneNumber);      // Run the userVerification method
-        
-        return userAge; // return the userAge to update the value in main().
-    }
-
+   
      /**
      *      userVerification displays the final message to the end user whether they
      *      cannot play, or can play. Also displays the values entered by the user.
@@ -103,19 +100,4 @@ public class AgeVerificationv2 {
     }
         return inputLine;
     }
-
-    
-    private static void userVerification(int userAge, String userName, String userAddress, String userPhoneNumber) {             // method
-        if (userAge < RequiredAge){                                       // loop,
-            // System.out.println("Sorry, you must be " + RequiredAge + " or older to play this game");
-        }
-        else {
-            // need to save to a file to store
-            
-            System.out.println("Welcome " + userName);
-            System.out.println("You are " + userAge);
-            System.out.println("Entered Address is " + userAddress);
-            System.out.println("Telephone number is " + userPhoneNumber);
-        } // close ifelse
-    }   // close method
 }    // close class
