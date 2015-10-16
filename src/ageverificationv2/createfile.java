@@ -17,7 +17,7 @@ public class createfile {
 
         public File writefile(File file){
             try{
-                FileWriter writer = new FileWriter("J:\\test.txt");
+                FileWriter writer = new FileWriter("person.txt");
             }
             catch(IOException e) {
                 System.out.println("IOException: " + e);

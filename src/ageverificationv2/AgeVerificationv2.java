@@ -26,7 +26,7 @@ public class AgeVerificationv2 {
     
         BufferedWriter bw = null;
         try {
-            bw = new BufferedWriter(new FileWriter("J:\\test.txt"));
+            bw = new BufferedWriter(new FileWriter("person.txt"));
         } catch (IOException ex) {
             Logger.getLogger(AgeVerificationv2.class.getName()).log(Level.SEVERE, null, ex);
         }

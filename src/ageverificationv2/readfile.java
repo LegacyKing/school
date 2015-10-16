@@ -18,7 +18,7 @@ public class readfile {
     
     public void openFile(){
         try{
-            x = new Scanner(new File("J:\\test.txt"));
+            x = new Scanner(new File("person.txt"));
         }
         catch(Exception e){
             System.out.println("could not find file");
